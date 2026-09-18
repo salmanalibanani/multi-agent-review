@@ -1,0 +1,13 @@
+# Normalise line endings so a clone behaves the same on every platform.
+* text=auto eol=lf
+
+# These only work with CRLF.
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# Never rewrite binaries.
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary

@@ -1,0 +1,20 @@
+node_modules/
+
+# Transcripts and summaries from local runs
+.multi-agent-review/
+
+# Personal config - the example is committed, yours is not
+multi-agent-review.json
+.multi-agent-review.json
+
+# Ticket copies, plans and reviews (the default --plan-dir). Ignored here because a ticket copy
+# pulled from a private tracker should not reach a public repo by accident. In your own project,
+# delete this line if you want plans version-controlled - many teams do.
+plans/
+
+# Editors and OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db

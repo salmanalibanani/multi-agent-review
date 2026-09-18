@@ -1,0 +1,55 @@
+{
+  "$comment": "Copy to multi-agent-review.json in your project and edit. Every field is optional.",
+
+  "reviewer": "codex",
+  "reviser": "claude",
+
+  "maxRounds": 10,
+  "stopOn": ["high", "medium"],
+  "severities": ["High", "Medium", "Low"],
+  "timeoutMinutes": 30,
+  "heartbeatSeconds": 20,
+  "$comment_dirs": "Leave these out and the tool keeps plans and transcripts in its own folder, away from the repository under review. Set them to put the output in your project instead; a relative path is resolved from where you run the command.",
+  "logDir": null,
+  "planDir": null,
+
+  "$comment_intake": "Ticket mode. planner and fetcher default to the reviser when left out; tickets are always given as full URLs on the command line.",
+  "planner": null,
+  "fetcher": null,
+  "tools": { "gh": "gh" },
+
+  "agents": {
+    "claude": {
+      "$comment": "bypassPermissions lets the reviser run the shell commands verification needs. A headless session cannot answer a permission prompt, so the cautious default refuses them instead. The guardrail is what bounds the blast radius either way - read the README before turning this on.",
+      "command": "claude",
+      "args": ["-p", "--permission-mode", "bypassPermissions"],
+      "promptVia": "stdin"
+    },
+    "claude-mcp": {
+      "$comment": "Verified working headless: Claude Code reaches an authenticated MCP connector with acceptEdits plus an explicit allowedTools list, so a Jira fetch needs no shell access and no bypassPermissions. Replace the placeholders with the tool names your own tracker connector exposes - run the agent once interactively to see them. Nothing about your connector belongs in a committed config.",
+      "command": "claude",
+      "args": [
+        "-p",
+        "--permission-mode",
+        "acceptEdits",
+        "--allowedTools",
+        "mcp__<your-connector>__<read-tool>,mcp__<your-connector>__<search-tool>"
+      ],
+      "promptVia": "stdin"
+    },
+    "my-own-agent": {
+      "command": "some-cli",
+      "args": ["review", "--repo", "{{workdir}}", "--round", "{{round}}"],
+      "promptVia": "arg",
+      "env": { "SOME_API_MODE": "review" }
+    }
+  },
+
+  "templates": {
+    "$comment": "Replace any prompt wholesale. Review placeholders: artifact, review, context, contextList, contextCount, round, date, workdir, stopOn, severities, severityLine. Intake placeholders: url, key, provider, ticket, ticketFile, artifact, workdir, date.",
+    "fetch": "./prompts/fetch.md",
+    "planner": "./prompts/planner.md",
+    "reviewer": "./prompts/reviewer.md",
+    "reviser": "./prompts/reviser.md"
+  }
+}

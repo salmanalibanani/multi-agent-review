@@ -1,0 +1,43 @@
+{
+  "name": "multi-agent-review",
+  "version": "0.2.0",
+  "description": "Give it a ticket URL: it fetches the ticket, drafts a plan, then puts that plan through repeated adversarial review by two AI agents until the reviewer has nothing material left to say.",
+  "type": "module",
+  "bin": {
+    "multi-agent-review": "src/cli.js",
+    "mar": "src/cli.js"
+  },
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "engines": {
+    "node": ">=20.11.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "scripts": {
+    "test": "node --test \"test/*.test.js\"",
+    "review": "node src/cli.js"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "code-review",
+    "document-review",
+    "codex",
+    "claude",
+    "cli"
+  ],
+  "author": "Salman Ali Banani",
+  "license": "MIT",
+  "files": [
+    "src",
+    "templates",
+    "multi-agent-review.example.json",
+    "README.md",
+    "LICENSE"
+  ]
+}
