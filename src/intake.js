@@ -17,7 +17,7 @@ import path from 'node:path';
 import { runAgent } from './agent.js';
 import { resolveAgent } from './config.js';
 import { runCapture, whichCommand } from './platform.js';
-import { loadTemplate, localDate, render } from './prompts.js';
+import { loadTemplate, localDate, localTimestamp, render, stampLastRevisedFile } from './prompts.js';
 
 const GH_ISSUE_FIELDS = [
   'number',
@@ -219,6 +219,7 @@ export async function ensurePlan(options) {
     key: ticket.key,
     workdir: paths.workdir,
     date: localDate(),
+    stamp: localTimestamp(),
     severities: config.severities.join(' / '),
   });
 
@@ -248,6 +249,10 @@ export async function ensurePlan(options) {
   if (run.code !== 0) throw new Error(`${agent.name} exited ${run.code} drafting the plan`);
   if (!(await exists(planPath))) {
     throw new Error(`${agent.name} did not write ${planPath}. Its transcript is in ${logDir}.`);
+  }
+  // Record exactly when the draft was written in its "Last revised" row.
+  if (!(await stampLastRevisedFile(planPath))) {
+    reporter.warn(`${planPath} has no "| Last revised |" header row, so its draft time was not recorded`);
   }
   return agent.name;
 }

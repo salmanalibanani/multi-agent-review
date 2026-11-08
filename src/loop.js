@@ -15,7 +15,7 @@ import path from 'node:path';
 
 import { runAgent } from './agent.js';
 import { compareSnapshots, describeChanges, snapshot } from './guardrail.js';
-import { loadTemplate, promptValues, render } from './prompts.js';
+import { loadTemplate, promptValues, render, stampLastRevisedFile } from './prompts.js';
 import {
   formatCounts,
   isClean,
@@ -225,6 +225,11 @@ export async function runLoop(run) {
         stopReason: `guardrail: ${afterRevise.reason} (round ${round}, ${reviser.name})`,
         history,
       };
+    }
+
+    // The revision has just been written: record exactly when in the plan's "Last revised" row.
+    if (!(await stampLastRevisedFile(paths.artifact))) {
+      reporter.warn(`${paths.artifact} has no "| Last revised |" header row, so its revision time was not recorded`);
     }
 
     history[history.length - 1].folded = 'yes';

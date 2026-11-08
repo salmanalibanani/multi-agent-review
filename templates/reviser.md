@@ -27,6 +27,8 @@ you have not opened the file is the one failure that makes this whole loop worth
   it. Record it as an open decision, with the options and who should decide.
 - Update the document's version and revision note to say it was revised after round {{round}} on
   {{date}}, and refresh any "next steps" or resume section.
+- Keep the header row `| Last revised | ... |` (add it to the header table if it is missing) and set it
+  to `{{stamp}}`; mar resets it to the moment you finish.
 - Leave any instruction block addressed to the reviewer intact and verbatim, including its verdict-line
   requirement.
 

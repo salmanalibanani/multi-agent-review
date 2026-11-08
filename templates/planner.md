@@ -11,9 +11,9 @@ and line you cite, so cite them accurately and do not assert what you have not v
 
 ## What the plan must contain
 
-- **Header**: a title, `v1`, today's date ({{date}}), the ticket key and URL, and the baseline — the
-  current commit (`git rev-parse --short HEAD`), whether it matches the upstream branch, and the branch
-  name.
+- **Header**: a title, `v1`, a row exactly `| Last revised | {{stamp}} |` (mar resets it to the moment
+  you finish), the ticket key and URL, and the baseline — the current commit
+  (`git rev-parse --short HEAD`), whether it matches the upstream branch, and the branch name.
 - **Problem**: what is wrong or missing, in terms of the code, with `file:line` references. For a
   defect, the root cause rather than the symptom.
 - **Design**: the approach, and why this one. Name the alternatives you rejected and why.
